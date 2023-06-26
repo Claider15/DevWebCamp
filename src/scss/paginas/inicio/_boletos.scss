@@ -1,0 +1,158 @@
+@use 'base/variables' as v;
+@use 'base/mixins' as m;
+
+.boletos {
+    &__grid {
+        @include m.contenedor-sm;
+        @include m.grid(1, 5rem);
+    }
+}
+
+.boleto {
+    width: min(100% - 5rem, 65rem); // el tamaño máximo serán 65rem
+    margin: 0 auto;
+    padding: 6rem;
+    border-radius: 2rem;
+    color: v.$blanco;
+    position: relative;
+
+    &::before,
+    &::after {
+        position: absolute; // Siempre que se utiliza un before y un after; tienes que utilizar un content
+        content: ''; // En este caso este contet no va a tener nada porque lo va a definir un background-color
+        background-color: v.$blanco;
+        width: 5rem;
+        height: 5rem;
+        top: calc(50% - 2.5rem);
+    }
+
+    &::before {
+        clip-path: circle(50% at 25% 50%);
+        left: 0;
+    }
+
+    &::after {
+        clip-path: circle(50% at 75% 50%);
+        right: 0;
+    }
+
+    &--presencial {
+        background-color:hsla(178,100%,39%,1);
+        background-image:
+        radial-gradient(at 49% 95%, hsla(209,100%,47%,1) 0px, transparent 50%),
+        radial-gradient(at 92% 94%, hsla(178,100%,39%,1) 0px, transparent 50%),
+        radial-gradient(at 85% 10%, hsla(209,100%,47%,1) 0px, transparent 50%),
+        radial-gradient(at 2% 3%, hsla(178,100%,39%,1) 0px, transparent 50%),
+        radial-gradient(at 6% 86%, hsla(209,100%,47%,1) 0px, transparent 50%);
+    }
+
+    &--virtual {
+        background-color: v.$secundario;
+    }
+
+    &--gratis {
+        background-color: v.$azul;
+    }
+
+    &__logo {
+        @include m.logo;
+        @include m.texto-fluido(2rem, 4rem);
+    }
+
+    &__plan {
+        font-size: 2rem;
+        text-transform: uppercase;
+        margin: 3rem 0 0 0;
+    }
+
+    &__precio {
+        margin: 3rem 0 0 0;
+        font-weight: v.$bold;
+        font-size: 4rem;
+    }
+
+    &__enlace-contenedor {
+        margin-top: 5rem;
+        display: flex;
+        justify-content: center;
+    }
+
+    &__enlace {
+        @include m.boton(v.$azul, v.$blanco);
+        width: auto; // que solo tome el ancho que requiere el botón
+    }
+
+    $modificador: &;
+
+    &--acceso {
+        width: 30rem;
+        height: 50rem;
+        padding: 10rem 3rem;
+        @include m.tablet {
+            width: 60rem;
+            height: 30rem;
+            padding: 6rem;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        #{$modificador}__logo {
+            @include m.texto-fluido(2rem, 3rem);
+            margin: 0;
+            text-align: left;
+        }
+        
+        #{$modificador}__nombre {
+            text-transform: uppercase;
+            font-size: 2.4rem;
+            font-weight: v.$black;
+            @include m.tablet {
+                font-size: 2rem;
+            }
+        }
+
+        #{$modificador}__codigo {
+            font-size: 4rem;
+            font-weight: v.$bold;
+            text-align: center;
+            position: absolute;
+            bottom: 8rem;
+            margin: 0;
+            left: 0;
+            width: 100%;
+
+            @include m.tablet {
+                rotate: 90deg;
+                transform-origin: 0 0;
+                top: 0;
+                left: calc(100% - 4rem);
+                width: 30rem;
+            }
+        }
+
+    }
+    &::before {
+        clip-path: circle(50% at 50% 25%);
+        left: calc(50% - 2.5rem);
+        top: 0;
+        @include m.tablet {
+            clip-path: circle(50% at 25% 50%);
+            left: 0;
+            top: calc(50% - 2.5rem);
+        }
+    }
+    
+    &::after {
+        clip-path: circle(50% at 50% 75%);
+        left: calc(50% - 2.5rem);
+        top: calc(100% - 5rem);
+        @include m.tablet {
+            clip-path: circle(50% at 75% 50%);
+            right: 0; 
+            left: calc(100% - 5rem);
+            top: calc(50% - 2.5rem);
+        }
+    }
+
+}
